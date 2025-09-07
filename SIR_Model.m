@@ -2,11 +2,9 @@ clc; close all; clear;
 
 %Membaca file CSV
 file = 'Data COVID-19 in Depok City (July 2020).csv';
-% The original code was throwing an error because it was trying to read the header row.
-% This has been fixed by specifying the delimiter and starting from the second row (row 1 in 0-based indexing).
 a = dlmread(file, ';', 1, 0);
 
-%Ekstrak x, y, dan z from 2nd to 32nd row
+%Ekstrak x, y, dan z dari baris 2 - 32
 tdat = 1:31;
 x = a(1:31, 1);
 y = a(1:31, 2);
