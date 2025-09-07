@@ -1,24 +1,24 @@
 clc; close all; clear;
 
-%Membaca file CSV
-file = 'Data COVID-19 in Depok City (July 2020).csv';
+% Reading CSV File
+file = 'Data COVID-19.csv';
 a = dlmread(file, ';', 1, 0);
 
-%Ekstrak x, y, dan z dari baris 2 - 32
+% Extracting Data from CSV for Plotting
 tdat = 1:31;
 x = a(1:31, 1);
 y = a(1:31, 2);
 z = a(1:31, 3);
 
-t0 = 0.0; % nilai waktu t awal (dalam tahun)
-tn = 150.0; % nilai waktu t akhir (dalam tahun)
-S0 = 1709;% kondisi awal untuk susceptible
-I0 = 323; % kondisi awal untuk infectious
-R0 = 468; % kondisi awal untuk recovered
-beta = 0.000025; % laju infeksi
-gamma = 0.05; % laju recovery
+t0 = 0.0;           % Initial t (in days)
+tn = 150.0;         % Final t (in days)
+S0 = 1709;          % Initial condition for susceptible
+I0 = 323;           % Initial condition for infected
+R0 = 468;           % Initial condition for recovered
+beta = 0.000025;    % Infection rate
+gamma = 0.05;       % Recovery rate
 
-% Parameter numerik dan set matriks kosong
+% Numerical Setup
 ndata = 1000;
 S = zeros(ndata,1);
 S(1) = S0;
@@ -29,7 +29,7 @@ R(1) = R0;
 t = linspace(t0, tn, ndata);
 h = t(2)-t(1);
 
-% Mendefinsikan fungsi
+% Defining the SIR Model Equations using Functions
 sus = @(t,S,I) -beta.*S.*I;
 infect = @(t,S,I) (beta.*S.*I)-(gamma.*I);
 recov = @(t,I) (gamma.*I);
@@ -57,7 +57,7 @@ for i = 1:ndata-1
   R(i+1)=R(i)+(1/6)*h*(kR1+2*kR2+2*kR3+kR4);
 end
 
-% Plot hasil
+% Plotting the Results
 figure(1)
 plot(tdat, x, 'x', 'MarkerEdgeColor', 'r', 'LineWidth', 0.5); hold on;
 plot(tdat, y, 'x', 'MarkerEdgeColor', 'g', 'LineWidth', 0.5);
@@ -67,7 +67,7 @@ plot(t, I, 'g', 'LineWidth', 1);
 plot(t, R, 'b', 'LineWidth', 1);
 hold off;
 legend('S (data)', 'I (data)', 'R (data)', 'S (model)', 'I (model)', 'R (model)');
-xlabel('Waktu (Hari)','FontSize',12)
-ylabel('Populasi (Penduduk)','FontSize',12)
+xlabel('Time (Days)','FontSize',12)
+ylabel('Population (Citizen)','FontSize',12)
 title('SIR Model for Covid-19 with 4th Order Runge-Kutta ODE','FontSize',12)
 grid on
