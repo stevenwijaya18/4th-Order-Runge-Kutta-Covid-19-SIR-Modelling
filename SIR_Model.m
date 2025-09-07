@@ -18,7 +18,7 @@ R0 = 468; % kondisi awal untuk recovered
 beta = 0.000025; % laju infeksi
 gamma = 0.05; % laju recovery
 
-% Parameter Numerik dan Pesen Tempat
+% Parameter numerik dan set matriks kosong
 ndata = 1000;
 S = zeros(ndata,1);
 S(1) = S0;
